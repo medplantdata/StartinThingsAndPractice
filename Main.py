@@ -1,15 +1,13 @@
 import streamlit as st
-import streamlit.components.v1 as components
-from TestFunctions import RequestFromCoconut 
-from rdkit import Chem
+import TestFunctions as tf
 
-search_query = st.text_input("Enter your chemical name query:", value = "theobromine")
+search_query = st.text_input("Enter your chemical name query:", value="theobromine")
 
-getMOl = RequestFromCoconut()
+getMOl = tf.RequestFromCoconut()
+
 if st.button("Search") and search_query:
-    raw = getMOl.searchMolecule(search_query)
-    st.code(raw[:500])
+    resp = getMOl.searchMolecule(search_query)
 
-if st.button("Search"):
-    result = getMOl.searchMolecule(search_query)
-    st.write(result)
+    st.write("Status:", resp.status_code)
+    st.write("Content-Type:", resp.headers.get("Content-Type"))
+    st.code(resp.text[:500])
