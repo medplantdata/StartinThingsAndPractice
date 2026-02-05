@@ -1,5 +1,14 @@
 import requests
 
+class RequestFromChEMBL:
+    def __init__(self):
+        self.baseURL = "https://www.ebi.ac.uk/chembl/api/data/molecule/search.xml?q="
+
+    def nameToSMILES(self, name: str):
+        r = requests.get(self.baseURL + name)
+        r.raise_for_status()
+        data = r.xml()
+        return data
 
 class RequestFromCoconut:
     def __init__(self):
