@@ -2,13 +2,13 @@ import requests
 
 class RequestFromChEMBL:
     def __init__(self):
-        self.baseURL = "https://www.ebi.ac.uk/chembl/api/data/molecule/search.xml?q="
+        self.baseURL = "https://www.ebi.ac.uk/chembl/api/data/molecule/search.json?q="
 
     def nameToSMILES(self, name: str):
         r = requests.get(self.baseURL + name)
         r.raise_for_status()
-        data = r.xml()
-        return data
+        data = r.json()
+        return data["molecules"][0]["molecule_structures"]["canonical_smiles"]
 
 class RequestFromCoconut:
     def __init__(self):
