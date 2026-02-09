@@ -1,4 +1,47 @@
 import requests
+from chembl_webresource_client.new_client import new_client
+
+class RequestFromChEMBLPYTHON:
+    def __init__(self):
+        self.molecule = new_client.molecule
+        self.target = new_client.target
+        self.activity = new_client.activity
+
+    def targetIDtoCompoundList(self, target_id: str, limit: int = 20):
+        activities = self.activity.filter(target_chembl_id=target_id,assay_type = "B").only('molecule_chembl_id')
+        print('Number of activities:', len(activities))
+
+
+        ligands = {}
+        Ids = []
+        seen = set()
+
+        for a in activities:
+            if a['molecule_chembl_id'] not in seen:
+                seen.add(a['molecule_chembl_id'])
+                Ids.append(a['molecule_chembl_id'])
+            if len(Ids) >= limit:
+                break
+        
+        for chembl_id in Ids:
+            mols = self.molecule.filter(molecule_chembl_id=chembl_id).only(["molecule_chembl_id", "molecule_name", "molecule_structures"])
+            for mol in mols:
+                structures = mol.get("molecule_structures") or {}
+                smiles = structures.get("canonical_smiles")
+                if not smiles:
+                    continue
+                name = mol.get("molecule_name") or "Unknown"
+                print(f"Processing {chembl_id}: {name}")
+                ligands[chembl_id] = {
+                    "name": name,
+                    "smiles": smiles,
+                }
+
+        return [
+            {"chembl_id": chembl_id, "name": data["name"], "smiles": data["smiles"]}
+            for chembl_id, data in ligands.items()
+        ]  
+
 
 class RequestFromChEMBL:
     def __init__(self):
