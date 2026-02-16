@@ -21,6 +21,7 @@ function App() {
           <button className="search-button">Search NP</button>
           <button className="search-button">Search Diseases</button>
           <button className="search-button">Search Drugs</button>
+          <button className="search-button">Clear</button>
         </div>
       </div>
     </div>
