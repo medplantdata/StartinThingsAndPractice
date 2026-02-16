@@ -6,9 +6,22 @@ from TestFunctions import RequestFromChEMBL
 #from rdkit.Chem import Draw
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # or ["*"] during dev
+    allow_credentials=True,
+    allow_methods=["*"],         # allow POST, GET, OPTIONS, etc.
+    allow_headers=["*"],
+)
 class Query(BaseModel):
     q: str
 

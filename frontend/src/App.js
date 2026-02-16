@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function App() {
-  const[query,setQuery] = useState("");
+  const[query,setQuery] = useState("");s
   const navigate =useNavigate();
 
   async function searchNP() {
