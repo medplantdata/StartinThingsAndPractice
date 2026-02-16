@@ -1,0 +1,29 @@
+.app {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.search-container {
+  display: inline-block;
+  text-align: left;
+}
+
+.search-input {
+  width: 490px;
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+
+.search-button,
+.clear-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
